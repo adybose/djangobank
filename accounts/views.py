@@ -1,14 +1,71 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.views import View
+from django.contrib.auth import (authenticate,login,logout)
 
-# Create your views here.
+from django.shortcuts import render, redirect, get_object_or_404
 
-# accounts/views.py
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
-from django.views import generic
+from .forms import UserLoginForm, UserRegistrationForm
+from .models import User
+
+class MyView(View):
+
+    def register_view(request):
+        if request.user.is_authenticated:
+            return redirect("home")
+        else:
+            title = "Create a Bank Account"
+            form = UserRegistrationForm(
+                request.POST or None,
+                request.FILES or None
+                )
+
+            if form.is_valid():
+                user = form.save(commit=False)
+                password = form.cleaned_data.get("password1")
+                user.set_password(password)
+                user.save()
+                new_user = authenticate(email=user.email, password=password)
+                login(request, new_user)
+                messages.success(
+                request,
+                '''Thank You For Creating A Bank Account {}.
+                Your Account Number is {}, Please use this number to login
+                '''.format(new_user.full_name, new_user.account_no))
+
+                return redirect("home")
+
+            context = {"title": title, "form": form}
+
+            return render(request, "accounts/form.html", context)
 
 
-class SignUp(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'signup.html'
+    def login_view(request):
+        if request.user.is_authenticated:
+            return redirect("home")
+        else:
+            title = "Login"
+            form = UserLoginForm(request.POST or None)
+
+            if form.is_valid():
+                account_no = form.cleaned_data.get("account_no")
+                user_obj = User.objects.filter(account_no=account_no).first()
+                password = form.cleaned_data.get("password")
+
+                user = authenticate(email=user_obj.email, password=password)
+                login(request, user)
+                messages.success(request, 'Welcome, {}!' .format(user.full_name))
+                return redirect("home")
+
+            context = {"form": form,
+                   "title": title
+                   }
+
+            return render(request, "accounts/form.html", context)
+
+
+    def logout_view(request):
+        if not request.user.is_authenticated:
+            return redirect("login")
+        else:
+            logout(request)
+            return redirect("home")

@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+
+{% block title %} {{ block.super }}{% endblock title %}
+
+{% block content %}
+<div class="container" style="padding-top: 50px;">
+    <div class="jumbotron text-center">
+      <div class="container">
+        <h2 class="jumbotron-heading">DjangoBank Private Unlimited</h2>
+        <p class="lead text-muted">Welcome to the bank that never runs out of money</p>
+        <p>Ab hoga NYAY!</p>
+        <p>
+          <a class="btn btn-primary btn-md" href="{% url 'login' %}" role="button">Login</a>
+          <a class="btn btn-success btn-md" href="{% url 'register' %}" role="button">Create Account</a>
+        </p>
+      </div>
+    </div>
+</div>
+
+{% endblock content %}
