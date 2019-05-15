@@ -1,7 +1,7 @@
 from django.db.models import Sum
 from django.shortcuts import render
 
-from transactions.models import Deposit, Withdrawal, Interest
+from transactions.models import Deposit, Withdrawal
 
 
 def home(request):
@@ -13,8 +13,6 @@ def home(request):
         deposit_sum = deposit.aggregate(Sum('amount'))['amount__sum']
         withdrawal = Withdrawal.objects.filter(user=user)
         withdrawal_sum = withdrawal.aggregate(Sum('amount'))['amount__sum']
-        interest = Interest.objects.filter(user=user)
-        interest_sum = interest.aggregate(Sum('amount'))['amount__sum']
 
         context = {
                     "user": user,
@@ -22,8 +20,6 @@ def home(request):
                     "deposit_sum": deposit_sum,
                     "withdrawal": withdrawal,
                     "withdrawal_sum": withdrawal_sum,
-                    "interest": interest,
-                    "interest_sum": interest_sum,
                   }
 
         return render(request, "core/transactions.html", context)
