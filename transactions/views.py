@@ -5,10 +5,10 @@ from django.shortcuts import render, redirect
 from django.views import View
 from .forms import DepositForm, WithdrawalForm
 
-class MyTransictions(View):
+class MyTransactions(View):
 
     @login_required()
-    def diposit_view(request):
+    def deposit_view(request):
         if not request.user.is_authenticated:
             raise Http404
         else:
@@ -37,7 +37,7 @@ class MyTransictions(View):
         if not request.user.is_authenticated:
             raise Http404
         else:
-            title = "Withdraw"
+            title = "Withdrawal"
             form = WithdrawalForm(request.POST or None)
 
             if form.is_valid():

@@ -1,11 +1,11 @@
 from django import forms
 
-from .models import Diposit, Withdrawal
+from .models import Deposit, Withdrawal
 
 
 class DepositForm(forms.ModelForm):
     class Meta:
-        model = Diposit
+        model = Deposit
         fields = ["amount"]
 
 

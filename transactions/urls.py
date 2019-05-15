@@ -1,9 +1,9 @@
 from django.conf.urls import url
 
-from transactions.views import MyTransictions
+from transactions.views import MyTransactions
 
 urlpatterns = [
 
-    url('deposit', MyTransictions.diposit_view, name='deposit'),
-    url('withdrawal', MyTransictions.withdrawal_view, name='withdrawal'),
+    url('deposit', MyTransactions.deposit_view, name='deposit'),
+    url('withdrawal', MyTransactions.withdrawal_view, name='withdrawal'),
 ]

@@ -6,9 +6,9 @@
 {% include "core/messages.html" %}
 
     <div class="page-header">
-      <h1 class="text-center"><b>Harman Connected Services</b><br></h1>
+      <h1 class="text-center"><b>DjangoBank</b><br></h1>
       <center>
-      <h2>Harman Bank</h2>
+      <h2>Welcome to your Dashboard</h2>
         </center>
     </div>
     
@@ -24,7 +24,7 @@
     <div class="well">
     <h4 class="card"><b>Account Balance: </b>{{ user.balance }} ₹</h4>
     <a class="btn btn-success" href="{% url 'transactions:deposit' %}">Deposit</a>
-    <a class="btn btn-danger" href="{% url 'transactions:withdrawal' %}">Withdraw</a>
+    <a class="btn btn-danger" href="{% url 'transactions:withdrawal' %}">Withdrawal</a>
     </div>
   </div>
 

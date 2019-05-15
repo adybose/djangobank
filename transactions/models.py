@@ -7,7 +7,7 @@ from django.db import models
 User = settings.AUTH_USER_MODEL
 
 
-class Diposit(models.Model):
+class Deposit(models.Model):
     user = models.ForeignKey(User)
     amount = models.DecimalField(
       decimal_places=2,
